@@ -8,7 +8,9 @@ const connectMongoDBAtlas = async (listenForPort) => {
       // unseFindAndModify: false,
     });
 
-    console.log(`MongoDb Atlas Connected: ${conn.connection.host}`);
+    console.log(
+      `MongoDb Atlas Connected: ${conn.connection.host}`.cyan.underline
+    );
     listenForPort();
   } catch (err) {
     console.error(err);

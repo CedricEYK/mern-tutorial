@@ -2,6 +2,8 @@ const { urlencoded } = require("express");
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
+const morgan = require("morgan");
+const colors = require("colors");
 
 //* Middlewares
 const connectDataBase = require("./config/database");
@@ -16,6 +18,9 @@ const app = express();
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
 
+app.use(morgan("dev"));
+
+//* Routes
 app.use(require("./routes/goals"));
 
 app.use(errorHandler);

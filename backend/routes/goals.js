@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const goalsController = require("../controllers/goals");
 
-router.post("/", goalsController.createGoal);
-
-router.get("/api/goals", goalsController.readGoals);
+router
+  .route("/api/goals")
+  .post(goalsController.createGoal)
+  .get(goalsController.readGoals);
 
 router
   .route("/api/goals/:id")
