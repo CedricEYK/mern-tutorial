@@ -1,17 +1,24 @@
+const { urlencoded } = require("express");
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 
+//* Middlewares
 const connectDataBase = require("./config/database");
+const { errorHandler } = require("./middleware/errorHandler");
+
 const port = process.env.PORT || 5000;
 
+//* Initialise express
 const app = express();
 
-app.use("/", (req, res, next) => {
-  res.status(200).json({
-    msg: "Hey!",
-  });
-});
+//* BodyParser middleware
+app.use(express.json());
+app.use(urlencoded({ extended: false }));
+
+app.use(require("./routes/goals"));
+
+app.use(errorHandler);
 
 connectDataBase(() => {
   app.listen(
