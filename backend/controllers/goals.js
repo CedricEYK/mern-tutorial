@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Goal = require("../models/goal");
 
 //* desc Create goal
-//* route POST /
+//* route POST /api/goals
 //* access Private to user
 exports.createGoal = asyncHandler(async (req, res) => {
   if (!req.body.text) {

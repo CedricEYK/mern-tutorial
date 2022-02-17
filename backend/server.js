@@ -22,6 +22,7 @@ app.use(morgan("dev"));
 
 //* Routes
 app.use(require("./routes/goals"));
+app.use(require("./routes/users"));
 
 app.use(errorHandler);
 
