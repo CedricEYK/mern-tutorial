@@ -37,10 +37,11 @@ exports.createUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       password: user.password,
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
-    throw new Error("Invalid user");
+    throw new Error("Invalid user data");
   }
 });
 
@@ -48,20 +49,33 @@ exports.createUser = asyncHandler(async (req, res) => {
 //*route POST /api/users/login
 //*access Public
 exports.loginUser = asyncHandler(async (req, res) => {
-  console.log(req.body);
+  const { email, password } = req.body;
 
-  res.status(200).json({
-    msg: "Login user",
-  });
+  const user = await User.findOne({ email });
+
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.status(201).json({
+      _id: user.id,
+      email: user.email,
+      password: user.password,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid credantials");
+  }
 });
 
 //*desc Get user data
 //*route GET /api/users/me
-//*access Public
+//*access Private
 exports.getUser = asyncHandler(async (req, res) => {
-  console.log(req.body);
-
-  res.status(200).json({
-    msg: "Get user data",
-  });
+  res.status(200).json(req.user);
 });
+
+//*setup JWT token
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
+};
