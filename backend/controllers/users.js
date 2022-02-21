@@ -33,10 +33,6 @@ exports.createUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
-      _id: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
       token: generateToken(user._id),
     });
   } else {
