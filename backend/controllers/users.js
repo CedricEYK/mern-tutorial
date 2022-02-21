@@ -51,9 +51,6 @@ exports.loginUser = asyncHandler(async (req, res) => {
 
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(201).json({
-      _id: user.id,
-      email: user.email,
-      password: user.password,
       token: generateToken(user._id),
     });
   } else {

@@ -1,13 +1,13 @@
-const { urlencoded } = require("express");
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv").config();
-const morgan = require("morgan");
-const colors = require("colors");
+const { urlencoded } = require('express');
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
+const morgan = require('morgan');
+const colors = require('colors');
 
 //* Middlewares
-const connectDataBase = require("./config/database");
-const { errorHandler } = require("./middleware/errorHandler");
+const connectDataBase = require('./config/database');
+const { errorHandler } = require('./middleware/errorHandler');
 
 const port = process.env.PORT || 5000;
 
@@ -18,11 +18,11 @@ const app = express();
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
 
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
 //* Routes
-app.use(require("./routes/goals"));
-app.use(require("./routes/users"));
+app.use(require('./routes/goals'));
+app.use(require('./routes/users'));
 
 app.use(errorHandler);
 

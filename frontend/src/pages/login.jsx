@@ -40,7 +40,7 @@ function Login() {
       [e.target.name]: e.target.value,
     }))
   }
-  
+
   const onSubmit = (e) => {
     e.preventDefault()
 
@@ -73,7 +73,7 @@ function Login() {
           onChange={onChange} />
         </div>
         <div className='form-group'>
-          <input type="text" className='form-control' id='password'
+          <input type="password" className='form-control' id='password'
           name='password' value={password} placeholder='Enter your password'
           onChange={onChange} />
         </div>
