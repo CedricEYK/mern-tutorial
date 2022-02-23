@@ -1,6 +1,6 @@
-const asyncHandler = require("express-async-handler");
-const Goal = require("../models/goal");
-const User = require("../models/user");
+const asyncHandler = require('express-async-handler');
+const Goal = require('../models/goal');
+const User = require('../models/user');
 
 //* desc Create goal
 //* route POST /api/goals
@@ -8,7 +8,7 @@ const User = require("../models/user");
 exports.createGoal = asyncHandler(async (req, res) => {
   if (!req.body.text) {
     res.status(400);
-    throw new Error("add a text field");
+    throw new Error('add a text field');
   }
 
   const goal = await Goal.create({ user: req.user._id, text: req.body.text });
@@ -31,7 +31,7 @@ exports.readGoal = asyncHandler(async (req, res) => {
 
   if (!goal) {
     res.status(400);
-    throw new Error("Goal not found");
+    throw new Error('Goal not found');
   }
 
   res.status(200).json(goal);
@@ -43,22 +43,21 @@ exports.readGoal = asyncHandler(async (req, res) => {
 exports.updateGoal = asyncHandler(async (req, res) => {
   const goal = await Goal.findById(req.params.id);
 
-  console.log(req.user);
   if (!goal) {
     res.status(400);
-    throw new Error("Goal not found");
+    throw new Error('Goal not found');
   }
 
   //* Check for user
   if (!req.user) {
     res.status(401);
-    throw new Error("User not found");
+    throw new Error('User not found');
   }
 
   //* Match goal user with logged in user
   if (goal.user.toString() !== req.user.id) {
     res.status(401);
-    throw new Error("Unauthorized user");
+    throw new Error('Unauthorized user');
   }
 
   const updateGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
@@ -75,19 +74,19 @@ exports.deleteGoal = asyncHandler(async (req, res) => {
 
   if (!goal) {
     res.status(400);
-    throw new Error("Goal not found");
+    throw new Error('Goal not found');
   }
 
   //* Check for user
   if (!req.user) {
     res.status(401);
-    throw new Error("User not found");
+    throw new Error('User not found');
   }
 
   //* Match goal user with logged in user
   if (goal.user.toString() !== req.user.id) {
     res.status(401);
-    throw new Error("Unauthorized user");
+    throw new Error('Unauthorized user');
   }
 
   await goal.remove();
