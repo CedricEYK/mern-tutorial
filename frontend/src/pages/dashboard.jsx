@@ -2,8 +2,11 @@ import {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import GoalForm from '../components/goalForm'
+import GoalItem from '../components/goalItem'
 import Spinner  from '../components/spinner'
 import { readGoals, reset } from '../features/goals/goalsSlice'
+
+
 function Dashboard() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -38,6 +41,14 @@ function Dashboard() {
       <p>Goals Dashboard</p>
       </section>
       <GoalForm />
+
+      <section className='content'>
+        {goals.length > 0 ? (<div className='goals'>
+          {goals.map((goal) => (
+            <GoalItem key={goal._id} goal={goal} />
+          ))}
+        </div>) : (<h3> You have not set ny goals</h3>)}
+      </section>
     </>
   )
 }
